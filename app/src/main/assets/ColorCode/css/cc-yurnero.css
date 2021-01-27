@@ -1,0 +1,79 @@
+/* Generics */
+.DlHighlight {
+  width: 97%;
+  background-color: #f8f8f8;
+  border-left: 6px solid #e8e8e8;
+  border-top: 1px solid #e8e8e8;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+  font: 10pt Monaco,serif;
+  padding: 6px 1%;
+  overflow:  auto;
+  color: #222;
+  border-radius: 3px 3px 3px 3px;
+}
+
+.DlHighlight pre { margin: 0; padding: 0; }
+
+.DlHighlight .operand { color: #333; }
+.DlHighlight .keyword { color: #dd9966; }
+
+.DlHighlight .builtin { color: #222; }
+
+.DlHighlight .string { color: #669900; }
+.DlHighlight .string .before, .DlHighlight .string .after { color: #669900; }
+
+.DlHighlight .regexp { color: #394b56; }
+.DlHighlight .regexp .before, .DlHighlight .regexp .after { color: #394b56; font-weight: bold; }
+
+.DlHighlight .comment { color: #c0c0c0; }
+.DlHighlight .comment .before, .DlHighlight .comment .after { color: #c0c0c0; }
+
+.DlHighlight .hashkey { color: #1283b1; }
+
+.DlHighlight .hasharrow { color: #222; }
+
+.DlHighlight .paren {  color: #222;}
+
+.DlHighlight .operator { color: #222; }
+
+.DlHighlight .error { background-color: #c00; color: #222; }
+
+.DlHighlight .defun { color: #222;    }
+
+.DlHighlight .line-numbers {
+  float: left;
+  width: 3em;
+  margin-left: -10px;
+  text-align: center;
+  color: #bcbcbc;
+  margin-right: 5px;
+  border-right: 1px solid #e8e8e8;
+  font: 0.9em Monaco,serif;
+  padding-top: 0.06em;
+}
+
+/* XML */
+
+.DlHighlight .xml-tag-close .before { color: #669900; }
+.DlHighlight .xml-tagangle { color: #}
+
+.DlHighlight .xml-entity { color: #dd9966; }
+.DlHighlight .xml-entity .before, .DlHighlight .xml-entity .after { color: #669900; }
+
+/* CSS */
+.DlHighlight .css-element { color: #dd9966; }
+.DlHighlight .css-class { color: #222;}
+.DlHighlight .css-pseudo-class { color: #777; }
+.DlHighlight .css-id { font-weight: bold; }
+.DlHighlight .css-color-spec { color: #669900; }
+.DlHighlight .css-length { color: #dd9966; }
+.DlHighlight .css-length .after { font-weight: bold; }
+.DlHighlight .css-keyword { color: #222; }
+.DlHighlight .css-keyword .after { color: #222; }
+.DlHighlight .css-attribute { color: #1283B1; }
+.DlHighlight .css-comma { color: #222; }
+.DlHighlight .css-url { color: #222; }
+.DlHighlight .css-brack-open { color: #222; }
+.DlHighlight .css-brack-close { color: #222; }
+.DlHighlight .css-end { color: #222; }

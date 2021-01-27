@@ -1,0 +1,49 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="编译器">
+
+		<menu>
+			<group>
+				<item android:title="   编译器"/>
+
+				<item android:id="@+id/app_theme" android:title="   主题"/>
+			</group>
+		</menu>
+
+	</item>
+
+	<item android:title="工程">
+
+		<menu>
+			<group>
+                <item android:id="@+id/html_settings" android:title="   HTML"/>
+                
+				<item android:id="@+id/project_path" android:title="   工作目录" />
+
+				<item android:title="   自动保存" />
+                
+                <item android:id="@+id/project_orientation" android:title="   屏幕方向"/>
+			</group>
+		</menu>
+
+	</item>
+
+	<item android:title="版本">
+
+		<menu>
+			<group>
+
+				<item android:title="   获取更新" />
+
+				<item android:title="   权限检测" />
+
+				<item android:title="   关于 | 版权" />
+
+				<item android:id="@+id/app_result" android:title="   软件反馈" />
+
+			</group>
+		</menu>
+
+	</item>
+	
+</menu>

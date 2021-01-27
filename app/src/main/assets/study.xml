@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Study>
+	
+    <item>  
+        <name>线性布局 - LinearLayout</name>
+        <msg>三大基本布局 - 线性布局(LinearLayout)在Modpe中的的教程</msg>
+		<code>study/LinearLayout.js</code>
+        <img>null</img>
+        <language>javascript</language>
+	</item>
+    
+    <item>
+        <name>帧布局 - FrameLayout</name>
+        <msg>三大基本布局 - 帧布局(FrameLayout)在modpe中的使用</msg>
+        <code>study/FrameLayout.js</code>
+        <img>null</img>
+        <language>javascript</language>
+    </item>
+    
+    <item>
+        <name>相对布局 - RelativeLayout</name>
+        <msg>三大基本布局 - 相对布局(RelativeLayout)在modpe中的使用</msg>
+        <code>study/RelativeLayout.js</code>
+        <img>img</img>
+        <language>javascript</language>
+    </item>
+	
+</Study>  

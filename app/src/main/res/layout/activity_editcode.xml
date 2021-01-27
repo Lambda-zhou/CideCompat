@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+	android:orientation="vertical"
+	android:id="@+id/activity_editcodeLinearLayout"
+    xmlns:tools="http://schemas.android.com/tools">
+
+	<android.support.design.widget.AppBarLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/activity_main_AppBarLayout"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+		<android.support.v7.widget.Toolbar
+			android:id="@+id/fragment_editor_Toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+		
+    </android.support.design.widget.AppBarLayout>
+    
+			<com.xiaohan.seven.cide.view.TextEditor
+				android:layout_width="match_parent"
+				android:id="@+id/jseditor"
+				android:background="#44000000"
+				android:layout_height="wrap_content" />
+		
+</LinearLayout>

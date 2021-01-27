@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Code>
+    <item>
+        <name>简单登录布局</name>
+        <msg>简单好看的登录布局(Modpe)</msg>
+        <img>null</img>
+        <language>javascript</language>
+        <code>codes/login.js</code>
+        
+    </item>
+
+</Code>

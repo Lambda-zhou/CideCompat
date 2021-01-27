@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+    
+
+    <ExpandableListView
+        android:divider="#E8E8E8"
+        android:dividerHeight="1dp"
+        android:groupIndicator="@null"
+        android:childDivider="#E8E8E8"
+        android:id="@+id/new_project_typesExpandableListView"
+    />
+
+    <ExpandableListView
+        android:divider="#E8E8E8"
+        android:dividerHeight="1dp"
+        android:groupIndicator="@null"
+        android:childDivider="#E8E8E8"
+        android:id="@+id/new_project_typesExpandableListView2"
+    />
+    
+    
+</LinearLayout>

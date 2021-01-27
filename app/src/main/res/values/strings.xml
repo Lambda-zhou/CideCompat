@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CideCompat</string>
+	<string name="app_error">错误</string>
+    <string name="app_subtitle_error">程序发生了崩溃..</string>
+    <string name="app_running">CIDE运行中...</string>
+    <string name="restart">清除数据并重启(会损坏项目文件)</string>
+    <string name="app_editting">CIDE - 正在工作</string>
+    <string name="app_settings">设置</string>
+	<string name="activity_editting">%s - 项目</string>
+</resources>

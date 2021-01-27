@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+    android:padding="15dp"
+	android:orientation="vertical">
+
+	<android.support.v7.widget.CardView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+        android:padding="5dp"
+		app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="#2169f3"
+		app:cardElevation="0dp">
+
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<ImageView
+				android:id="@+id/nav_project_image"
+				android:layout_width="108dp"
+				android:layout_height="108dp"
+				android:scaleType="centerCrop"/>
+
+			<LinearLayout
+				android:orientation="vertical"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+                android:padding="3dp"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+				android:layout_toRightOf="@id/nav_project_image">
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:text=""
+                    android:id="@+id/nav_project_title"
+					android:textColor="@color/colorAccent"
+					android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/nav_project_size"/>
+
+				<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/nav_poject_time"/>
+
+			</LinearLayout>
+
+		</RelativeLayout>
+
+	</android.support.v7.widget.CardView>
+
+</LinearLayout>
+

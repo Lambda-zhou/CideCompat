@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <item
+        android:id="@+id/menu_path"
+        android:title="复制路径"/>
+
+    <item
+        android:id="@+id/menu_delete"
+        android:title="删除"/>
+
+</menu>

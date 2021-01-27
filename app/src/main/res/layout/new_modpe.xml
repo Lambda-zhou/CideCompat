@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:padding="10dp"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content">
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="工程名称:"
+		android:textColor="@android:color/black"
+		android:textSize="20sp"
+		android:id="@+id/projectname"
+		android:padding="5dp"/>
+
+	<android.support.v7.widget.AppCompatEditText
+		style="@style/Widget.AppCompat.EditText"
+		android:singleLine="true"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/new_mc_js_name2"/>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal">
+
+		<android.support.v7.widget.AppCompatCheckBox
+			android:layout_width="wrap_content"
+			android:layout_weight="1"
+			android:text="添加公共ctx"
+			android:checked="true"
+			android:id="@+id/new_mc_js_cb12"
+			android:layout_height="wrap_content"/>
+
+		
+	</LinearLayout>
+
+</LinearLayout>
+

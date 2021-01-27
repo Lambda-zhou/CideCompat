@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent">
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="标题"
+		android:gravity="center"
+		android:id="@+id/appcompatdialogTextView1"
+		android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+	<View
+		android:background="?android:attr/dividerVertical"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_below="@id/appcompatdialogTextView1"
+		android:id="@+id/appcompatdialogView1"/>
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:text="正文"
+		android:textAppearance="?android:attr/textAppearanceSmall"
+		android:layout_below="@id/appcompatdialogView1"
+		android:id="@+id/appcompatdialogTextView2"
+		android:gravity="center"/>
+
+	<View
+		android:background="?android:attr/dividerVertical"
+		android:layout_width="match_parent"
+		android:layout_height="1dp"
+		android:layout_below="@id/appcompatdialogTextView2"
+		android:id="@+id/appcompatdialogView2"/>
+
+	<LinearLayout
+		android:orientation="horizontal"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@id/appcompatdialogView2">
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="取消"/>
+
+		<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.5"
+			android:text="确定"/>
+
+	</LinearLayout>
+
+</RelativeLayout>
+

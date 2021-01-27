@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ColorCode Demo | PIZn</title>
+        <meta charset="utf-8">
+        <meta content="PIZn" name="author">
+        <meta content="ColorCode Style, Just an highlight code style! By PIZn" name="description">
+        <link rel="stylesheet" type="text/css" href="../css/cc-moonfang.css" media="all" />
+        <script src="../js/colorcode.js"></script>
+        <script type="text/javascript">
+            window.onload=function() {  
+                DlHighlight.HELPERS.highlightByName('htmlTest', 'pre','', false);
+                DlHighlight.HELPERS.highlightByName('cssTest', 'pre','', false);
+                DlHighlight.HELPERS.highlightByName('jsTest', 'pre','', true);
+            }
+        </script>
+    </head>
+    <body>
+<h1>ColorCode Style</h1>
+<h2>theme:  cc-moonfang</h2>
+<p>Hi all, This is ColorCode Hightlight Style Demo.</p>
+<p>Author:  PIZn</p>
+<p>Contact:  pizner@gmail.com && <a href="http://www.pizn.net" title="pizn's
+    blog" target="_blank">www.pizn.net</a></p>
+<p>Github:  <a href="http://pizn.github.com/blog" title="pizn's github blog" target="_blank">pizn.github.com/blog</a> && <a href="https://github.com/pizn/colorcode" title="colorcode project" target="_blank">github.com/pizn/colorcode</a></p>
+<pre name="htmlTest" class="xml">
+&lt;!DOCTYPE HTML&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Hello world!&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;div class="hello"&gt;
+            &lt;a href="http://www.pizn.net" title="link"&gt;hello&lt;/a&gt;
+            &lt;img src="http://www.pizn.net/img.png" alt="test" /&gt;
+        &lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<pre name="cssTest" class="css">
+/**
+ * @name:       css
+ * @author:     pizn(www.pizn.net)
+ */
+#entry a {
+  font-family: "Times New Roman", Times, serif;
+  padding: 1px 5px;
+  text-decoration: none;
+  -moz-border-radius: 3px 3px;
+  -webkit-border-radius: 3px 3px;
+  -o-border-radius: 3px 3px;
+  border-radius: 3px 3px;
+}
+.entry > h2:first-child, .entry > h1:first-child, .entry > h1:first-child + h2 {
+  border: 0 none;
+  margin: 12px 0 0;
+  padding: 10px 0 0;
+  color: #383838;
+}
+.entry img[class*="wp-image-"] {
+  border: 1px solid #c5c5c5;
+  padding: 2px 2px;
+  height: auto;
+  background: #d5d5d5;
+}
+</pre>
+<pre name="jsTest" class="js">
+/**
+ * @name:       js
+ * @author:     pizn(www.pizn.net)
+ */
+DlHighlight.HELPERS = {
+    highlightByName : function(name, tag, args, bubbles) {
+        if (!bubbles)
+            bubbles = false;
+        if (!args)
+            args = {};
+        if (!tag)
+            tag = "pre";
+        var a = document.getElementsByTagName(tag);
+        for (var i = a.length; --i >= 0;) {
+            var el = a[i];
+            if (el.getAttribute("name") == name) {
+
+                var code = el._msh_text || getText(el);
+                el._msh_text = code;
+
+                args.lang = el._msh_type || el.className;
+                el._msh_type = args.lang;   
+
+                // IE not show the lineNumbers
+                if (!DlHighlight.is_ie) {
+                    args.lineNumbers = bubbles;
+                }
+
+                var hl = new DlHighlight(args);
+
+                code = hl.doItNow(code);        
+                if (DlHighlight.is_ie) {        
+                    // kills whitespace
+                    var div = document.createElement("div");
+                    div.innerHTML = "&lt;pre&gt;" + code + "&lt;/pre&gt;";                      
+                    while (div.firstChild) {
+                    // remove the code
+                        el.removeChild(el.firstChild);
+                        // append the new style code
+                        el.appendChild(div.firstChild);
+                    }
+
+                } else {    
+                    el.innerHTML = code;                    
+                }
+                el.className = "DlHighlight " + el.className;
+            }
+        }
+    }
+};
+</pre>
+    </body>
+</html>

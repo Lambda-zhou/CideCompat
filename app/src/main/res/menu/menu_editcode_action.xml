@@ -1,0 +1,68 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/undo"
+        android:icon="@drawable/undo"
+        android:title="撤销"
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
+    <item
+        android:id="@+id/redo"
+        android:icon="@drawable/redo"
+        android:title="回退"
+        app:showAsAction="always" />
+
+    <item
+    android:id="@+id/run"
+    android:icon="@drawable/run"
+    android:title="运行"
+    app:showAsAction="always"
+    />
+
+    <item android:title="代码..." app:showAsAction="never">
+
+        <menu>
+
+            <item
+                android:id="@+id/savecode"
+                android:title="保存"
+            />
+
+            <item
+                android:id="@+id/copycode"
+                android:title="复制"
+            />
+
+            <item
+                android:id="@+id/stickcode"
+                android:title="粘贴"
+            />
+
+        </menu>
+
+    </item>
+
+    <item android:title="更多..." app:showAsAction="never">
+        <menu>
+
+            <item
+                android:id="@+id/selector_colors"
+                android:title="颜色选择器"
+            />
+
+            <item
+                android:id="@+id/selector_project"
+                android:title="选择项目"
+            />
+
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/selector_settings"
+        android:title="设置"
+    />
+
+</menu>
+
