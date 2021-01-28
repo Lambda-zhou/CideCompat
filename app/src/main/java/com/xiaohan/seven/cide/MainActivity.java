@@ -96,6 +96,22 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.HttpEntity;
 import android.graphics.drawable.Drawable;
+import java.io.ByteArrayOutputStream;
+import java.io.BufferedOutputStream;
+import dalvik.system.DexClassLoader;
+import org.mozilla.javascript.Context;
+import org.mozilla.javascript.Scriptable;
+import org.mozilla.javascript.ScriptableObject;
+import java.io.FileWriter;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
+import android.Manifest;
+import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.RequiresApi;
+import org.mozilla.javascript.Function;
+import org.mozilla.javascript.NativeJavaObject;
+import android.provider.Settings;
 
 public class MainActivity extends BaseActivity implements OnItemLongClickListener {
 
@@ -141,7 +157,11 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
         
         //startActivity(new Intent(this, TestActivity.class));
         
-        
+        if(!(new File(STORAGE + ".CideCompat").exists() && new File(STORAGE + ".CideCompat").isDirectory())){
+			new File(STORAGE + ".CideCompat").mkdirs();
+		}else{
+			
+		}
         
         autoSetProperty();
         
@@ -707,13 +727,14 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
 									try{
                                     Gson gson = new Gson();
                                     FileData datas = gson.fromJson(ApplicationUtils.getTextFromSD(theFile), FileData.class);
-									MainProject project = new MainProject(R.drawable.ic_launcher_foreground, datas.getName(), datas.getSize()[0] ,datas.getTime()[0]);
+									MainProject project = new MainProject(R.drawable.ic_launcher_foreground, datas.getName(), datas.getSize()[0] ,datas.getTime()[0], "html");
 									project.setPaths(datas.getPaths());
 									mainProjectItem.add(project);
 									}catch(Throwable e2){
 										Gson gson2 = new Gson();
                                         AndroidData datas2 = gson2.fromJson(ApplicationUtils.getTextFromSD(theFile), AndroidData.class);
-                                        MainProject project2 = new MainProject(R.drawable.ic_launcher_foreground, datas2.getName(), datas2.getSize()[0], datas2.getTime()[0]);
+										
+                                        MainProject project2 = new MainProject(R.drawable.ic_launcher_foreground, datas2.getName(), datas2.getSize()[0], datas2.getTime()[0], "andjs");
                                         project2.setPaths(datas2.getPaths());
                                         mainProjectItem.add(project2);
 									}
@@ -883,9 +904,52 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
                                     case "打包":
                                         //test code
                                         //如何生成 key，具体方法见KeyHelpe
-                                        setOutPutPath("/storage/emulated/0/a.apk");
-                                        
-                                        
+										int _position = lv1.getChildAdapterPosition(p);
+										MainProject _project = mainProjectItem.get(_position);
+										AndroidData datas = new Gson().fromJson(ApplicationUtils.getTextFromSD(new File(new File(_project.getPaths()[0]).getParent() + "/build.json")), AndroidData.class);
+										String path = "";
+									    try {
+											InputStream is = getAssets().open("classes.dex");
+											byte[] msg = new byte[is.available()];
+											is.read(msg);
+											is.close();
+											
+											BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("/storage/emulated/0/.CideCompat/classes.dex"));
+											bos.write(msg);
+											bos.close();
+											
+											byte[] bytes = ApplicationUtils.getAssetsLibFileText("CideCompat-NoSigner_1.0.apk", MainActivity.this);
+											BufferedOutputStream bos2 = new BufferedOutputStream(new FileOutputStream("/storage/emulated/0/.CideCompat/CideCompat-NoSigner_1.0.apk"));
+											bos2.write(bytes);
+											bos2.close();
+											
+											Context ctx = Context.enter();
+											Scriptable scope = ctx.initStandardObjects();
+											ctx.setOptimizationLevel(-1);
+											ctx.setLanguageVersion(Context.VERSION_ES6);
+											ScriptableObject.putConstProperty(scope, "__javaContext__", Context.javaToJS(_this, scope));
+											ScriptableObject.putConstProperty(scope, "__javaLoader__", Context.javaToJS(_this.getClass().getClassLoader(), scope));
+											String str = "var ctx = __javaContext__;var a = new Packages.dalvik.system.DexClassLoader('/storage/emulated/0/.CideCompat/classes.dex',ctx.getDir('dex',0).getAbsolutePath(),null,ctx.getClassLoader()).loadClass('com.xiaohan.seven.apkpack.AndJSBuilder');var b = a.getConstructors()[0].newInstance( '" + datas.getName() + "', '" + _project.getPaths()[0] + "', '" + datas.getPackageName() + "', '" + datas.getVersionCode() + "', '" + datas.getVersionName() + "');function getPath(){return String(b.getTempFile().toString());};";
+											ctx.evaluateString(scope, str, "打包", 1, null);
+											Object object = scope.get("getPath", scope);
+											if(object instanceof Function){
+												Function function = (Function)object;
+												path = Context.toString(function.call(ctx, scope, scope, new Object[]{}));
+											}
+											ctx.exit();
+											AppCompatToast.makeText(MainActivity.this, "打包成功,正在安装", 1, 1);
+											startInstallActivity(new File(path));
+											
+										} catch (IOException e) {
+											AppCompatToast.makeText(MainActivity.this, "打包失败:" + e.toString(), 1, 1);
+										}
+
+                                        try {
+											//AndJSBuilder builder = new AndJSBuilder(datas.getName(), _project.getPaths()[0], datas.getPackageName(), datas.getVersionCode(), datas.getVersionName());
+										} catch (Exception e) {
+											throw new RuntimeException(e.toString());
+										}
+
                                     break;
                                     
                                     case "删除":
@@ -1292,18 +1356,12 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
 
             //判断是否有文件
             if (!(files == null || files.length == 0)) {
-
-                Boolean isModify = false;
-
+				
                 Boolean isProjectDirNull = true;
 
                 //DataInputStream读取到的是否为CideCompat,不是则抛出异常
                 for (File file : files) {
-                    if ((ApplicationUtils.getWorkName(this) + ".config").equals(file.getName())) {
-                        DataInputStream dis = new DataInputStream(new FileInputStream(new File(file.getAbsoluteFile().toString())));
-                        if (dis.readUTF().equals("CideCompat"))
-                            isModify = true;
-                    } else if (file.isDirectory() && file.getName().equals("projects")) {
+                    if (file.isDirectory() && file.getName().equals("projects")) {
                         isProjectDirNull = false;
                     }
                 }
@@ -1311,11 +1369,6 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
                 //没有projects目录则创建
                 if (isProjectDirNull) {
                     new File(path + "projects").mkdir();
-                }
-
-                if (!isModify) {
-                    //文件内容是否正确,不正确抛出异常
-                    throw new ApplicationModifiedException("核心文件缺失!");
                 }
 
             } else {
@@ -1392,8 +1445,43 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
         intent.putExtra("project_language", language);
         startActivity(intent);
     }
+    
+	
+	private void startInstallActivity(File file) {
+        File apkFile = file;
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //版本高于6.0，权限不一样
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            intent = new Intent(Intent.ACTION_VIEW);
+			intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+			String authority = "myProvider" + ".fileProvider";
+			Uri fileUri = FileProvider.getUriForFile(this, authority, file);
+			intent.setDataAndType(fileUri, "application/vnd.android.package-archive");
+            //兼容8.0
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                boolean hasInstallPermission = getPackageManager().canRequestPackageInstalls();
+                if (!hasInstallPermission) {
+                    startInstallPermissionSettingActivity();
+                }
+            }
+        } else {
+            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        }
+        startActivity(intent);
+    }
 
-
+    /**
+     * 跳转到设置-允许安装未知来源-页面
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void startInstallPermissionSettingActivity() {
+        //注意这个是8.0新API
+        Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+	
 
     @Override
     public boolean onItemLongClick(AdapterView<?> p1, View p2, int p3, long p4) {

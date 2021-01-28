@@ -20,6 +20,15 @@ import java.io.StringWriter;
 import org.mozilla.javascript.Context;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.ScriptableObject;
+import java.io.File;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutCompat;
+import android.view.LayoutInflater;
+import com.xiaohan.seven.cide.data.AndroidData;
+import com.google.gson.Gson;
 
 public class CideRunAndJSActivity extends BaseActivity {
     
@@ -36,10 +45,18 @@ public class CideRunAndJSActivity extends BaseActivity {
     private String threadname;
 
     private Boolean isErr = false;
+	
+	private Toolbar toolbar;
 
     public static TextView getLog() {
         return _this.log;
     }
+	
+	private CoordinatorLayout cl;
+	
+	private LinearLayout lay;
+	
+	private Boolean isSetContentView = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +71,13 @@ public class CideRunAndJSActivity extends BaseActivity {
 
         setContentView(R.layout.runmodpe);
 
-        Toolbar toolbar = findViewById(R.id.runmcjslogtoolbar);
+        toolbar = findViewById(R.id.runmcjslogtoolbar);
         setSupportActionBar(toolbar);
 
-
-
+        cl = findViewById(R.id.runmodpe_CoordinatorLayout);
+		
+		lay = findViewById(R.id.runmodpe_addview_LinearLayout);
+		
         threadname = Thread.currentThread().getName();
 
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler(){
@@ -91,6 +110,15 @@ public class CideRunAndJSActivity extends BaseActivity {
         this.name = getIntent().getStringExtra("project_name");
 
         log = findViewById(R.id.runmodpeTextView);
+		
+		if(new File(new File(file).getParent() + "/build.json").isFile()){
+			try{
+			AndroidData datas = new Gson().fromJson(ApplicationUtils.getTextFromSD(new File(new File(file).getParent() + "/build.json")), AndroidData.class);
+			this.code = ApplicationUtils.getTextFromSD(new File(datas.getPaths()[0]));
+			}catch(Throwable e){
+				
+			}
+		}
 
         _this = this;
         ActivitiesManager.addActivity(this);
@@ -99,13 +127,26 @@ public class CideRunAndJSActivity extends BaseActivity {
 
                     @Override
                     public void run() {
-                        runJavaScript(code, name, 1024);
+                        runJavaScript(code, name, 2048);
                     }
 
-                }, 10);
+                }, 1);
         }
 
     }
+
+	@Override
+	public void setContentView(View view) {
+		if(!isSetContentView){
+		isSetContentView = true;
+		super.setContentView(view);
+		}
+	}
+	
+	public void addView(View view) {
+		lay.removeView(findViewById(R.id.runmodpeRelativeLayout));
+		lay.addView(view);
+	}
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
@@ -114,10 +155,10 @@ public class CideRunAndJSActivity extends BaseActivity {
 
                 @Override
                 public void run() {
-                    runJavaScript(code, name, 1024);
+                    runJavaScript(code, name, 2048);
                 }
 
-            }, 10);
+            }, 1);
     }
 
     public void runJavaScript(final String code, final String name, long size) {
@@ -134,7 +175,7 @@ public class CideRunAndJSActivity extends BaseActivity {
                             ctx.setLanguageVersion(Context.VERSION_ES6);
                             ScriptableObject.putConstProperty(scope, "__javaContext__", Context.javaToJS(_this, scope));
                             ScriptableObject.putConstProperty(scope, "__javaLoader__", Context.javaToJS(_this.getClass().getClassLoader(), scope));
-                            ctx.evaluateString(scope, ApplicationUtils.getAssetsFileText("functions/Modpe.js", CideRunAndJSActivity.this), name, 1, null);
+							ctx.evaluateString(scope, ApplicationUtils.getTextFromSD(new File(new File(file).getParent() + "/CideCompat.as")), name, 1, null);
 
                             try {
                                 ctx.getCurrentContext().evaluateString(scope, code, name, 1, null);
@@ -182,6 +223,11 @@ public class CideRunAndJSActivity extends BaseActivity {
 
     }
 
+	public Toolbar getToolbar() {
+		
+		return this.toolbar;
+	}
+	
     public void print(int type, String msg) {
         switch (type) {
             case -1:
@@ -216,7 +262,7 @@ public class CideRunAndJSActivity extends BaseActivity {
         if (isErr)
             android.os.Process.killProcess(android.os.Process.myPid());
         else
-            super.onBackPressed();
+            finish();
 	}
     
 }

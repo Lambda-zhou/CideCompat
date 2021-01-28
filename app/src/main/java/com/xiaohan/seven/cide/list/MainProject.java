@@ -11,12 +11,15 @@ public class MainProject {
     private String time;
 	
 	private String[] paths;
+	
+	public String type;
     
-    public MainProject(int imageId, String title, String size, String time) {
+    public MainProject(int imageId, String title, String size, String time, String type) {
         this.imageId = imageId;
         this.title = title;
         this.size = size;
         this.time = time;
+		this.type = type;
     }
     
     public int getImageId() {
@@ -41,6 +44,10 @@ public class MainProject {
 	
 	public String[] getPaths() {
 		return this.paths;
+	}
+	
+	public String getType() {
+		return this.type;
 	}
     
 }

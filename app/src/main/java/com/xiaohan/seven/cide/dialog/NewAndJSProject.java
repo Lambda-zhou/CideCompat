@@ -20,7 +20,7 @@ import com.xiaohan.seven.cide.view.AppCompatToast;
 public class NewAndJSProject implements CompoundButton.OnCheckedChangeListener {
     Activity context;
     AlertDialog ad;
-    EditText name, packageName;
+    EditText name, packageName, versionCode, versionName;
     CheckBox hook,cide,request;
     boolean hookb = false, cideb = true, requestb = true;
     private OnCreateProjectListener onCreate = new OnCreateProjectListener(){
@@ -49,7 +49,7 @@ public class NewAndJSProject implements CompoundButton.OnCheckedChangeListener {
                             AppCompatToast.makeText(context, "请检查名称和包名是否填写!", 1, 1);
                             return;
                             }
-                            String result = NewFileUtils.newAndJSProject(context, name.getText().toString(), path , packageName.getText().toString(), hookb, cideb, requestb);
+                            String result = NewFileUtils.newAndJSProject(context, name.getText().toString(), path , packageName.getText().toString(), versionCode.getText().toString(), versionName.getText().toString(), hookb, cideb, requestb);
                             onCreate.onCreate(result);
                             ad.dismiss();
                         
@@ -58,6 +58,8 @@ public class NewAndJSProject implements CompoundButton.OnCheckedChangeListener {
                 .show();
                 this.name = ad.getWindow().findViewById(R.id.new_mc_js_name);
                 this.packageName = ad.getWindow().findViewById(R.id.new_mc_package_name);
+				this.versionCode = ad.getWindow().findViewById(R.id.new_mc_project_version);
+				this.versionName = ad.getWindow().findViewById(R.id.new_mc_project_version_name);
                 this.hook = ad.getWindow().findViewById(R.id.new_mc_js_cb2);
                 this.cide = ad.getWindow().findViewById(R.id.new_mc_js_cb3);
                 this.request = ad.getWindow().findViewById(R.id.new_mc_js_cb4);

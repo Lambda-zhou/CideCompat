@@ -2,42 +2,114 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xiaohan.seven.cide">
-    
+
+    <!-- 完全的网络访问权限 -->
     <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- 修改您的通讯录 -->
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+
+    <!-- 查找设备上的帐户 -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+    <!-- 读取您的通讯录 -->
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
+
+    <!-- 读取通话记录 -->
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+
+    <!-- 读取手机状态和身份 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+
+    <!-- 直接拨打电话号码 -->
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+
+    <!-- 写入通话记录 -->
     <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
+
+    <!-- 拨打/接听SIP电话 -->
     <uses-permission android:name="android.permission.USE_SIP"/>
+
+    <!-- 重新设置外拨电话的路径 -->
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
+
+    <!-- 添加语音邮件 -->
     <uses-permission android:name="com.android.voicemail.permission.ADD_VOICEMAIL"/>
+
+    <!-- 读取日历活动和机密信息 -->
     <uses-permission android:name="android.permission.READ_CALENDAR"/>
+
+    <!-- 添加或修改日历活动，并在所有者不知情的情况下向邀请对象发送电子邮件 -->
     <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+
+    <!-- 拍摄照片和视频 -->
     <uses-permission android:name="android.permission.CAMERA"/>
+
+    <!-- 人体传感器（如心跳速率检测器） -->
     <uses-permission android:name="android.permission.BODY_SENSORS"/>
+
+    <!-- 精确位置（基于GPS和网络） -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
+    <!-- 大致位置（基于网络） -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- 读取您的SD卡中的内容 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!-- 修改或删除您的SD卡中的内容 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- 录音 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+
+    <!-- 读取您的讯息（短信或彩信） -->
     <uses-permission android:name="android.permission.READ_SMS"/>
+
+    <!-- 接收讯息 (WAP) -->
     <uses-permission android:name="android.permission.RECEIVE_WAP_PUSH"/>
+
+    <!-- 接收讯息（彩信） -->
     <uses-permission android:name="android.permission.RECEIVE_MMS"/>
+
+    <!-- 接收讯息（短信） -->
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+
+    <!-- 发送短信 -->
     <uses-permission android:name="android.permission.SEND_SMS"/>
+
+    <!-- 读取小区广播消息 -->
     <uses-permission android:name="android.permission.READ_CELL_BROADCASTS"/>
-    <uses-permission android:name="android.permission.GET_TASKS" /> 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- 检索正在运行的应用 -->
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+
+    <!-- 查看网络连接 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!-- MOUNT_UNMOUNT_FILESYSTEMS -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+
+    <!-- 修改系统设置 -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <!-- 查看WLAN连接 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
+    <!-- 在其他应用之上显示内容 -->
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <!-- 开机启动 -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <!-- 控制振动 -->
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <!-- READ_LOGS -->
+    <uses-permission android:name="android.permission.READ_LOGS"/>
+
+    <!-- 请求安装文件包 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 
     <application
         android:name="com.applications.ApplicationUtils"
@@ -52,71 +124,77 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
+
             <intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				
+
+                <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
+
             </intent-filter>
+
         </activity>
-        
+
         <activity
             android:name=".ExceptionActivity"
-            android:label="@string/app_error"
-        />
+            android:label="@string/app_error"/>
 
         <activity
             android:name=".EditActivity"
-            android:label="@string/app_editting"
-        />
+            android:label="@string/app_editting"/>
 
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/app_settings"
-        />
+            android:label="@string/app_settings"/>
 
         <activity
             android:name=".CideRunJavaScriptActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name"
-        />
-	
-	    <activity
-			android:name=".CideRunHtmlActivity"
+            android:label="@string/app_name"/>
+
+        <activity
+            android:name=".CideRunHtmlActivity"
             android:configChanges="orientation"
-			android:label="@string/app_name"
-        />
-    
+            android:label="@string/app_name"/>
+
         <activity
             android:name=".StudyActivity"
-            android:label="@string/app_name"
-        />
-    
+            android:label="@string/app_name"/>
+
         <activity
             android:name=".CideRunAndJSActivity"
             android:configChanges="orientation"
-            android:label="@string/app_name"
-        />
-    
+            android:label="@string/app_name"/>
+
         <activity
             android:name=".TestActivity"
-            android:label="@string/app_name"
-        />
-    
+            android:label="@string/app_name"/>
+
         <service
             android:name="com.xiaohan.seven.cide.services.ApplicationService"
-            android:label="@string/app_running"
-        />
-      
+            android:label="@string/app_running"/>
+
         <service
             android:enabled="true"
             android:name="com.xiaohan.seven.cide.services.HtmlService"
-            android:label="@string/app_running"
-        />
-        
-      <meta-data
-          android:name="android.max_aspect"
-          android:value="4.0"/>
+            android:label="@string/app_running"/>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="myProvider.fileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="4.0"/>
 
     </application>
-	
+
 </manifest>

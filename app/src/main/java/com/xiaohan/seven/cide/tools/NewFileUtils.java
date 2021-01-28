@@ -19,7 +19,7 @@ import com.xiaohan.seven.cide.data.AndroidData;
 public abstract class NewFileUtils {
     
      
-    public static String newAndJSProject(Context context, String name, String path, String packageName, Boolean hook, Boolean cide, Boolean request) {
+    public static String newAndJSProject(Context context, String name, String path, String packageName, String versionCode, String versionName, Boolean hook, Boolean cide, Boolean request) {
         SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.getDefault());
         
         new File(path + "/" + name).mkdirs();
@@ -102,6 +102,8 @@ public abstract class NewFileUtils {
             mAndroidData.setTime(new String[]{formatDate.format(new Date()), formatDate.format(new Date())});
             mAndroidData.setPaths(new String[]{file.toString(), iconFile.toString()});
             mAndroidData.setPackageName(packageName);
+			mAndroidData.setVersionCode(versionCode);
+			mAndroidData.setVersionName(versionName);
             BufferedWriter bwJson = new BufferedWriter(new FileWriter(fileType, true));
             bwJson.write(new Gson().toJson(mAndroidData).toString());
 			bwJson.close();

@@ -24,5 +24,13 @@
         <img>img</img>
         <language>javascript</language>
     </item>
+    
+     <item>
+        <name>AndJS - 简介</name>
+        <msg>了解AndJS是干什么的以及有哪些优点</msg>
+        <code>study/AndJS-summary.as</code>
+        <img>img</img>
+        <language>javascript</language>
+    </item>
 	
 </Study>  

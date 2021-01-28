@@ -5,7 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+	android:id="@+id/runmodpe_CoordinatorLayout"
 >
+    
+    <LinearLayout
+	android:orientation="vertical"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:id="@+id/runmodpe_addview_LinearLayout"
+	>
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -19,9 +27,11 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </android.support.design.widget.AppBarLayout>
+	
     <RelativeLayout
         android:layout_width="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
+		android:id="@+id/runmodpeRelativeLayout"
         android:layout_height="match_parent">
         
         <ScrollView
@@ -49,5 +59,7 @@
             </HorizontalScrollView>
         </ScrollView>
     </RelativeLayout>
-
+	
+	</LinearLayout>
+	
 </android.support.design.widget.CoordinatorLayout>

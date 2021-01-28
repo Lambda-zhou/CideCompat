@@ -15,6 +15,10 @@ public class AndroidData {
     private String[] time;
     
     private String packageName;
+	
+	private String versionCode;
+	
+	private String versionName;
 
     public void setName(String name) {
         this.name = name;
@@ -55,7 +59,23 @@ public class AndroidData {
     public void setPackageName(String packageName) {
         this.packageName = packageName;
     }
-
+	
+	public void setVersionCode(String versionCode) {
+		this.versionCode = versionCode;
+	}
+	
+	public void setVersionName(String versionName) {
+		this.versionName = versionName;
+	}
+	
+	public String getVersionCode() {
+		return this.versionCode;
+	}
+	
+	public String getVersionName() {
+		return this.versionName;
+	}
+	
     public String[] getSize() {
         return this.size;
     }

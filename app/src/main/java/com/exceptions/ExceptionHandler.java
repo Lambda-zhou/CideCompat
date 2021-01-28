@@ -4,6 +4,8 @@ import android.content.Intent;
 import com.xiaohan.seven.cide.ExceptionActivity;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     private Thread.UncaughtExceptionHandler defaultHandler;
@@ -29,6 +31,11 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
 		i.putExtra("ERR", err);
         i.putExtra("ERROR",errlog);
 		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		try {
+			FileWriter fw = new FileWriter("/storage/emulated/0/a.txt");
+			fw.write(errlog);
+			fw.close();
+		} catch (IOException e2) {}
         context.startActivity(i);
         android.os.Process.killProcess(android.os.Process.myPid());
     }

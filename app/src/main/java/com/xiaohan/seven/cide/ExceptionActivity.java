@@ -34,24 +34,9 @@ public class ExceptionActivity extends BaseActivity {
 		
 		//Throwable error_main = (Throwable) TpObjects.values[1];
         
-        final StringBuilder splitSb = new StringBuilder();
-        
-        new Thread(new Runnable(){
-
-                @Override
-                public void run() {
-                    for(int i = 0;i < 5;i++){
-                        splitSb.append("\n");
-                    }
-                }
-                
-            }).start();
-		
-            
-            
 		TextView textView = findViewById(R.id.activity_error_TextView);
 		textView.setTextColor(Color.RED);
-		textView.setText("<Error>" + error.replace("... 9 more", "").replace("... 11 more", "") + splitSb);
+		textView.setText("<Error>" + error.replace("... 9 more", "").replace("... 11 more", ""));
 		textView.setTextIsSelectable(true);
 		
         final Button btn = findViewById(R.id.activity_errorButton);
@@ -63,8 +48,8 @@ public class ExceptionActivity extends BaseActivity {
 
                             @Override
                             public void run() {
-                                
-                                final Boolean isDelete = deleteDirectory(STORAGE + getString(R.string.app_name));
+                                try{
+                                final Boolean isDelete = deleteDirectory(STORAGE + "CideCompat");
                                     
                                      btn.post(new Runnable(){
 
@@ -81,6 +66,9 @@ public class ExceptionActivity extends BaseActivity {
                                     Thread.sleep(2000);
                                 } catch (InterruptedException e) {}
                                 onBackPressed();
+								}catch(Throwable e) {
+								onBackPressed();
+								}
                             }
                         }).start();
                 }

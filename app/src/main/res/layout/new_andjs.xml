@@ -38,6 +38,42 @@
         android:layout_height="wrap_content"
         android:id="@+id/new_mc_package_name"
     />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="版本号:"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:id="@+id/projectversion"
+        android:padding="5dp"
+    />
+    <android.support.v7.widget.AppCompatEditText
+        style="@style/Widget.AppCompat.EditText"
+        android:text="1"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_mc_project_version"
+    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="版本名称:"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:id="@+id/projectversionname"
+        android:padding="5dp"
+    />
+    <android.support.v7.widget.AppCompatEditText
+        style="@style/Widget.AppCompat.EditText"
+        android:text="1.0.0"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_mc_project_version_name"
+    />
      
     <LinearLayout
         android:layout_width="match_parent"

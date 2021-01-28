@@ -7,4 +7,5 @@
     <string name="app_editting">CIDE - 正在工作</string>
     <string name="app_settings">设置</string>
 	<string name="activity_editting">%s - 项目</string>
+	<string name="lib_name">Library</string>
 </resources>
