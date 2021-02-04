@@ -95,6 +95,7 @@ public class CideRunJavaScriptActivity extends AppCompatActivity {
         log = findViewById(R.id.runmodpeTextView);
 
 		_this = this;
+		com.mojang.minecraftpe.MainActivity.currentMainActivity.set(this);
 		ActivitiesManager.addActivity(this);
 		if(isRun){
 		new Handler().postDelayed(new Runnable(){

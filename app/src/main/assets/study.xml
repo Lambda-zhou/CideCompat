@@ -30,7 +30,15 @@
         <msg>了解AndJS是干什么的以及有哪些优点</msg>
         <code>study/AndJS-summary.as</code>
         <img>img</img>
-        <language>javascript</language>
+        <language>AndJS</language>
+    </item>
+    
+    <item>
+        <name>AndJS - 全局函数/属性</name>
+        <msg>了解AndJS的全局函数/属性的用法</msg>
+        <code>study/AndJS-global.as</code>
+        <img>img</img>
+        <language>AndJS</language>
     </item>
 	
 </Study>  

@@ -19,7 +19,6 @@ import com.myopicmobile.textwarrior3.common.LanguageLua;
 import com.xiaohan.seven.cide.language.ProjectLanguage;
 import com.xiaohan.seven.cide.tools.ApplicationUtils;
 import com.xiaohan.seven.cide.view.AppCompatToast;
-import com.xiaohan.seven.cide.view.SymbolView;
 import com.xiaohan.seven.cide.view.TextEditor;
 import tiiehenry.code.view.CodeEditor;
 import tiiehenry.code.language.objectivec.ObjectiveCLanguage;
@@ -28,6 +27,7 @@ import tiiehenry.code.language.php.PHPLanguage;
 import com.myopicmobile.textwarrior4.common.LanguageHtml;
 import com.xiaohan.seven.cide.settings.ApplicationGlobalSettings;
 import android.graphics.Color;
+import com.xiaohan.seven.cide.view.BottomColumnView;
 
 
 
@@ -45,7 +45,6 @@ public class EditActivity extends BaseActivity {
     private com.dream.highlighteditor.editor.TextEditor content_edit2;
 	com.muc.wide.Widget.TextEditor htmlEditor;
     private Toolbar toolbar;
-    private SymbolView sv;
     private Intent intent;
     private ProjectLanguage language;
     private LinearLayout layout;
@@ -116,7 +115,7 @@ public class EditActivity extends BaseActivity {
 
         switch(this.language){
             case AndJS:
-                content_edit.setLanguage(AndroidLanguage.getInstance());
+                content_edit.setLanguage(LanguageJavascript.getInstance());
                 break;
 
             case JavaScript:
@@ -198,19 +197,16 @@ public class EditActivity extends BaseActivity {
         //把焦点放到editor
         content_edit.requestFocus();
         //获取root布局
-        View rootView = getWindow().getDecorView();
-        sv = new SymbolView(this, rootView);
-        sv.setVisible(true);
-        sv.setOnSymbolViewClick(new SymbolView.OnSymbolViewClick() {
-                @Override
-                public void onClick(View view, String text) {
-                    if (text.equals("→")) {
-                        content_edit.paste("\t");
-                    } else {
-                        content_edit.paste(text);
-                    }
-                }
-            });
+		BottomColumnView bcv = new BottomColumnView(this, new String[]{"{", "}"});
+		bcv.setOnTextClickListener(new BottomColumnView.OnTextClickListener(){
+
+				@Override
+				public void onTextClick(View p1, String p2) {
+					content_edit.paste(p2);
+				}
+				
+		});
+		bcv.setAdapter();
     }
 
 

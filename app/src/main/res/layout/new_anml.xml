@@ -12,15 +12,15 @@
         android:textSize="20sp"
         android:id="@+id/projectname"
         android:padding="5dp"
-        />
+    />
     <android.support.v7.widget.AppCompatEditText
-         style="@style/Widget.AppCompat.EditText"
-         android:singleLine="true"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:id="@+id/new_mc_js_name"
-         />
-     
+        style="@style/Widget.AppCompat.EditText"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_mc_js_name"
+    />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -74,17 +74,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/new_mc_project_version_name"
     />
-     
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        >
+    >
         <android.support.v7.widget.AppCompatCheckBox
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:text="添加TimeTick钩子函数"
-            android:id="@+id/new_mc_js_cb2"
+            android:text="jQuery"
+            android:checked="false"
+            android:id="@+id/jquary"
             android:layout_height="wrap_content" />
     </LinearLayout>
     <LinearLayout
@@ -95,16 +96,16 @@
         <android.support.v7.widget.AppCompatCheckBox
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:text="添加CideCompat支持库"
-            android:checked="true"
-            android:id="@+id/new_mc_js_cb3"
+            android:text="Vue.js"
+            android:checked="false"
+            android:id="@+id/vuejs"
             android:layout_height="wrap_content" />
         <android.support.v7.widget.AppCompatCheckBox
             android:layout_width="wrap_content"
             android:layout_weight="1"
-            android:text="添加HttpRequest"
+            android:text="MDUI"
             android:checked="true"
-            android:id="@+id/new_mc_js_cb4"
+            android:id="@+id/mdui"
             android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

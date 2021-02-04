@@ -521,7 +521,7 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
                                                 bitmap = BitmapFactory.decodeStream(getAssets().open(imagePath));
                                             } catch (IOException e) {}
                                         }
-
+										
                                         listItem.add(new Study(name, msg, bitmap, language, new String(by)));
 
                                         otherAdapter.notifyDataSetChanged();
@@ -905,50 +905,81 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
                                         //test code
                                         //如何生成 key，具体方法见KeyHelpe
 										int _position = lv1.getChildAdapterPosition(p);
-										MainProject _project = mainProjectItem.get(_position);
-										AndroidData datas = new Gson().fromJson(ApplicationUtils.getTextFromSD(new File(new File(_project.getPaths()[0]).getParent() + "/build.json")), AndroidData.class);
-										String path = "";
-									    try {
-											InputStream is = getAssets().open("classes.dex");
-											byte[] msg = new byte[is.available()];
-											is.read(msg);
-											is.close();
+										final MainProject _project = mainProjectItem.get(_position);
+										final AndroidData datas = new Gson().fromJson(ApplicationUtils.getTextFromSD(new File(new File(_project.getPaths()[0]).getParent() + "/build.json")), AndroidData.class);
+										
+                                        if(_project.getType().equals("andjs")){
+										
+										new Thread(new Runnable(){
 											
-											BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("/storage/emulated/0/.CideCompat/classes.dex"));
-											bos.write(msg);
-											bos.close();
+											private String path = "";
 											
-											byte[] bytes = ApplicationUtils.getAssetsLibFileText("CideCompat-NoSigner_1.0.apk", MainActivity.this);
-											BufferedOutputStream bos2 = new BufferedOutputStream(new FileOutputStream("/storage/emulated/0/.CideCompat/CideCompat-NoSigner_1.0.apk"));
-											bos2.write(bytes);
-											bos2.close();
-											
-											Context ctx = Context.enter();
-											Scriptable scope = ctx.initStandardObjects();
-											ctx.setOptimizationLevel(-1);
-											ctx.setLanguageVersion(Context.VERSION_ES6);
-											ScriptableObject.putConstProperty(scope, "__javaContext__", Context.javaToJS(_this, scope));
-											ScriptableObject.putConstProperty(scope, "__javaLoader__", Context.javaToJS(_this.getClass().getClassLoader(), scope));
-											String str = "var ctx = __javaContext__;var a = new Packages.dalvik.system.DexClassLoader('/storage/emulated/0/.CideCompat/classes.dex',ctx.getDir('dex',0).getAbsolutePath(),null,ctx.getClassLoader()).loadClass('com.xiaohan.seven.apkpack.AndJSBuilder');var b = a.getConstructors()[0].newInstance( '" + datas.getName() + "', '" + _project.getPaths()[0] + "', '" + datas.getPackageName() + "', '" + datas.getVersionCode() + "', '" + datas.getVersionName() + "');function getPath(){return String(b.getTempFile().toString());};";
-											ctx.evaluateString(scope, str, "打包", 1, null);
-											Object object = scope.get("getPath", scope);
-											if(object instanceof Function){
-												Function function = (Function)object;
-												path = Context.toString(function.call(ctx, scope, scope, new Object[]{}));
-											}
-											ctx.exit();
-											AppCompatToast.makeText(MainActivity.this, "打包成功,正在安装", 1, 1);
-											startInstallActivity(new File(path));
-											
-										} catch (IOException e) {
-											AppCompatToast.makeText(MainActivity.this, "打包失败:" + e.toString(), 1, 1);
-										}
+												@Override
+												public void run() {
+													try {
+														InputStream is = getAssets().open("classes.dex");
+														byte[] msg = new byte[is.available()];
+														is.read(msg);
+														is.close();
 
-                                        try {
-											//AndJSBuilder builder = new AndJSBuilder(datas.getName(), _project.getPaths()[0], datas.getPackageName(), datas.getVersionCode(), datas.getVersionName());
-										} catch (Exception e) {
-											throw new RuntimeException(e.toString());
-										}
+														BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("/storage/emulated/0/.CideCompat/classes.dex"));
+														bos.write(msg);
+														bos.close();
+
+														byte[] bytes = ApplicationUtils.getAssetsLibFileText("CideCompat-NoSigner_1.0.apk", MainActivity.this);
+														BufferedOutputStream bos2 = new BufferedOutputStream(new FileOutputStream("/storage/emulated/0/.CideCompat/CideCompat-NoSigner_1.0.apk"));
+														bos2.write(bytes);
+														bos2.close();
+
+														String str = "var ctx = __javaContext__;var a = new Packages.dalvik.system.DexClassLoader('/storage/emulated/0/.CideCompat/classes.dex',ctx.getDir('dex',0).getAbsolutePath(),null,ctx.getClassLoader()).loadClass('com.xiaohan.seven.apkpack.AndJSBuilder');var b = a.getConstructors()[0].newInstance( '" + datas.getName() + "',[";
+														str += "'" + datas.getPaths()[0] + "',";
+														for(File file : new File(_project.getPaths()[0]).getParentFile().listFiles()){
+															//排除文件
+															if(!file.getName().equals("CideCompat.as") && !file.getName().equals("main.as") && !file.getName().equals("icon.png") && !file.getName().equals("build.json") && !file.getName().equals(datas.getName() + ".as")){
+																str += "'" + file.getAbsoluteFile().toString() + "',";
+															}
+														}
+
+
+														str = str.substring(0, str.length() - 1);
+
+														final Context ctx = Context.enter();
+														Scriptable scope = ctx.initStandardObjects();
+														ctx.setOptimizationLevel(-1);
+														ctx.setLanguageVersion(Context.VERSION_ES6);
+														ScriptableObject.putConstProperty(scope, "__javaContext__", Context.javaToJS(_this, scope));
+														ScriptableObject.putConstProperty(scope, "__javaLoader__", Context.javaToJS(_this.getClass().getClassLoader(), scope));
+														str += "], '" + datas.getPackageName() + "', '" + datas.getVersionCode() + "', '" + datas.getVersionName() + "');function getPath(){return String(b.getTempFile().toString());};";
+														ctx.evaluateString(scope, str, "打包", 1, null);
+														Object object = scope.get("getPath", scope);
+														if(object instanceof Function){
+															Function function = (Function)object;
+															path = Context.toString(function.call(ctx, scope, scope, new Object[]{}));
+														}
+														ctx.exit();
+														AppCompatToast.makeText(MainActivity.this, "打包成功,正在安装", 1, 1);
+														runOnUiThread(new Runnable(){
+
+																@Override
+																public void run() {
+																	startInstallActivity(new File(path));
+																	
+																}
+																
+														});
+														
+													} catch (Throwable e) {
+														AppCompatToast.makeText(MainActivity.this, "打包失败:" + e.toString(), 1, 1);
+													}
+												}
+												
+										}).start();
+										}else if(_project.equals("anml")){
+                                            
+                                        }else{
+                                            AppCompatToast.makeText(MainActivity.this, "不支持的项目无法打包", 1, 1);
+                                        }
+                                        
 
                                     break;
                                     

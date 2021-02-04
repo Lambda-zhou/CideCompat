@@ -1,30 +1,29 @@
 package com.xiaohan.seven.cide.tools;
+import _0xf3fa7b._0xOo0aDd;
+import _0xf3fa7b._0xcC0o_7;
+import _0xf3fa7b._0xfc0Ooab;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import com.xiaohan.seven.cide.R;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.FileNotFoundException;
-import java.io.ObjectOutputStream;
-import _0xf3fa7b._0xOo0aDd;
-import _0xf3fa7b._0xfc0Ooab;
-import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
-import _0xf3fa7b._0xcC0o_7;
+import java.io.ObjectOutputStream;
 import java.util.List;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import android.graphics.Bitmap;
-import android.content.res.AssetManager;
-import android.graphics.BitmapFactory;
 
 public abstract class ApplicationUtils {
     //检测SD卡是否可用
@@ -101,7 +100,25 @@ public abstract class ApplicationUtils {
         }
         return bitmap;
 		
+		
+		
 	}
+	
+	public static int getWidth(AppCompatActivity context) {
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return  metrics.widthPixels;
+
+    }
+
+    public static int getHeight(AppCompatActivity context) {
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        return metrics.heightPixels;
+
+    }
     
 	/**
      * 获取文件大小

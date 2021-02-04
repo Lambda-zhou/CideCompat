@@ -29,6 +29,10 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.view.LayoutInflater;
 import com.xiaohan.seven.cide.data.AndroidData;
 import com.google.gson.Gson;
+import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
+import com.activity.Activity;
+import com.activity.BundleData;
 
 public class CideRunAndJSActivity extends BaseActivity {
     
@@ -57,6 +61,14 @@ public class CideRunAndJSActivity extends BaseActivity {
 	private LinearLayout lay;
 	
 	private Boolean isSetContentView = false;
+	
+	public Context ctx;
+	
+	public Context currentCtx;
+	
+	public Scriptable scope;
+	
+	private Boolean isStudy = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +113,7 @@ public class CideRunAndJSActivity extends BaseActivity {
                     }
                 }
             });
-
-
+			
         this.code = getIntent().getStringExtra("code");
 
         this.file = getIntent().getStringExtra("project_file");
@@ -118,6 +129,8 @@ public class CideRunAndJSActivity extends BaseActivity {
 			}catch(Throwable e){
 				
 			}
+		}else{
+			isStudy = true;
 		}
 
         _this = this;
@@ -169,16 +182,27 @@ public class CideRunAndJSActivity extends BaseActivity {
                     //ApplicationUtils.saveFileToSD(, code);
                     switch(ApplicationGlobalSettings.getEngine()){
                         case Rhino:
-                            Context ctx = Context.enter();
-                            Scriptable scope = ctx.initStandardObjects();
+                            ctx = Context.enter();
+							_this.ctx = ctx;
+                            scope = ctx.initStandardObjects();
+							_this.scope = scope;
                             ctx.setOptimizationLevel(-1);
                             ctx.setLanguageVersion(Context.VERSION_ES6);
-                            ScriptableObject.putConstProperty(scope, "__javaContext__", Context.javaToJS(_this, scope));
+                            ScriptableObject.putProperty(scope, "__javaContext__", Context.javaToJS(_this, scope));
                             ScriptableObject.putConstProperty(scope, "__javaLoader__", Context.javaToJS(_this.getClass().getClassLoader(), scope));
-							ctx.evaluateString(scope, ApplicationUtils.getTextFromSD(new File(new File(file).getParent() + "/CideCompat.as")), name, 1, null);
-
+							ScriptableObject.putConstProperty(scope, "__javaPath__", Context.javaToJS(file, scope));
+							ScriptableObject.putConstProperty(scope, "__params__", Context.javaToJS(null, scope));
+							ctx.evaluateString(scope, "", name, 1, null);
+							currentCtx = ctx.getCurrentContext();
+							if(!isStudy){
+							currentCtx.evaluateString(scope, ApplicationUtils.getTextFromSD(new File(new File(file).getParent() + "/CideCompat.as")), name, 1, null);
+							}else{
+								currentCtx.evaluateString(scope, ApplicationUtils.getAssetsFileText("CideCompat.as", CideRunAndJSActivity.this), name, 1, null);
+								
+							}
                             try {
-                                ctx.getCurrentContext().evaluateString(scope, code, name, 1, null);
+								
+                                currentCtx.getCurrentContext().evaluateString(scope, code, name, 1, null);
                             }  catch (final Throwable e) {
                                 try {
                                     AppCompatToast.makeText(CideRunAndJSActivity.this, new String(ApplicationUtils.decodeString(file)), 1, 1);
@@ -204,7 +228,7 @@ public class CideRunAndJSActivity extends BaseActivity {
                                 }
 
                             } finally {
-                                ctx.exit();
+                                //ctx.exit();
                             }
                             break;
 
@@ -222,6 +246,16 @@ public class CideRunAndJSActivity extends BaseActivity {
             }, ApplicationUtils.getWorkName(this), size * size).start();
 
     }
+	
+	public void newActivity(String activityPath, String activityName, Object ... objs) {
+		Intent intent = new Intent(this, Activity.class);
+		Bundle bundle = new Bundle();
+		bundle.putSerializable("data", new BundleData(objs));
+		bundle.putString("path", activityPath);
+		bundle.putString("activity", activityName);
+		intent.putExtras(bundle);
+		startActivity(intent);
+	}
 
 	public Toolbar getToolbar() {
 		

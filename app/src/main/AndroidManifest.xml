@@ -165,6 +165,11 @@
             android:name=".CideRunAndJSActivity"
             android:configChanges="orientation"
             android:label="@string/app_name"/>
+		
+		<activity
+            android:name="com.activity.Activity"
+            android:configChanges="orientation"
+            android:label="@string/app_name"/>
 
         <activity
             android:name=".TestActivity"

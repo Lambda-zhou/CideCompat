@@ -29,9 +29,16 @@ public class StudyActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.activity_study_code_Toolbar);
         setSupportActionBar(toolbar);
         
+		String language = getIntent().getStringExtra("study_language");
+		
+		
         CodeView codeView = findViewById(R.id.code_view);
         Options options = Options.Default.get(this);
-        options.withLanguage(getIntent().getStringExtra("study_language"));
+        if(language == "AndJS"){
+			options.withLanguage("javascript");
+		}else{
+			options.withLanguage(language);
+		}
         options.withCode(getIntent().getStringExtra("study_code"));
         if(ApplicationGlobalSettings.app_theme){
             options.withTheme(ColorTheme.MONOKAI);
@@ -52,11 +59,19 @@ public class StudyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.run2:
+		    if(getIntent().getStringExtra("study_language").equals("javascript")){
             Intent intent = new Intent(this, CideRunJavaScriptActivity.class);
             intent.putExtra("project_file", "Study.js");
             intent.putExtra("project_name", "Study.js");
             intent.putExtra("code", getIntent().getStringExtra("study_code"));
             startActivity(intent);
+			}else{
+				Intent intent = new Intent(this, CideRunAndJSActivity.class);
+				intent.putExtra("project_file", "Study.as");
+				intent.putExtra("project_name", "Study.as");
+				intent.putExtra("code", getIntent().getStringExtra("study_code"));
+				startActivity(intent);
+			}
             break;
             
             case R.id.copycode2:
