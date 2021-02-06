@@ -112,6 +112,9 @@ import android.support.annotation.RequiresApi;
 import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeJavaObject;
 import android.provider.Settings;
+import java.io.StringWriter;
+import java.io.PrintWriter;
+import com.xiaohan.seven.cide.tools.LogUtils;
 
 public class MainActivity extends BaseActivity implements OnItemLongClickListener {
 
@@ -186,7 +189,7 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
 
         dialog.show();*/
         //new AppCompatDialog.Builder(this).show();
-
+        
 
         startService(new Intent(this, ApplicationService.class));
         leftDrawer = findViewById(R.id.DrawerLayout);
@@ -727,14 +730,14 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
 									try{
                                     Gson gson = new Gson();
                                     FileData datas = gson.fromJson(ApplicationUtils.getTextFromSD(theFile), FileData.class);
-									MainProject project = new MainProject(R.drawable.ic_launcher_foreground, datas.getName(), datas.getSize()[0] ,datas.getTime()[0], "html");
+									MainProject project = new MainProject(R.drawable.ic_launcher_foreground, datas.getName(), datas.getSize()[0] ,datas.getTime()[0], datas.getType());
 									project.setPaths(datas.getPaths());
 									mainProjectItem.add(project);
 									}catch(Throwable e2){
 										Gson gson2 = new Gson();
                                         AndroidData datas2 = gson2.fromJson(ApplicationUtils.getTextFromSD(theFile), AndroidData.class);
 										
-                                        MainProject project2 = new MainProject(R.drawable.ic_launcher_foreground, datas2.getName(), datas2.getSize()[0], datas2.getTime()[0], "andjs");
+                                        MainProject project2 = new MainProject(R.drawable.ic_launcher_foreground, datas2.getName(), datas2.getSize()[0], datas2.getTime()[0], datas2.getType());
                                         project2.setPaths(datas2.getPaths());
                                         mainProjectItem.add(project2);
 									}
@@ -885,15 +888,19 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
 				}
 				
 		});
+        
         mainProjectAdapter.setOnLongClickListener(new OnLongClickListener(){
-
                 @Override
                 public boolean onLongClick(final View p) {
+                    int position = lv1.getChildAdapterPosition(p);
+					MainProject project = mainProjectItem.get(position);
+                    if(project.getType().equals("andjs")||project.getType().equals("anml")){
                     try{
                     ((Vibrator)getSystemService(android.content.Context.VIBRATOR_SERVICE)).vibrate(40);
                     }catch(Exception e){
                         AppCompatToast.makeText(MainActivity.this, "没有震动权限:" + e.toString(), 1, 1);
                     }
+                    
                     PopupMenu menu = new PopupMenu(MainActivity.this, p);
                     menu.getMenuInflater().inflate(R.menu.project_popup_menu, menu.getMenu());
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener(){
@@ -908,7 +915,7 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
 										final MainProject _project = mainProjectItem.get(_position);
 										final AndroidData datas = new Gson().fromJson(ApplicationUtils.getTextFromSD(new File(new File(_project.getPaths()[0]).getParent() + "/build.json")), AndroidData.class);
 										
-                                        if(_project.getType().equals("andjs")){
+                                        if(datas.getType().equals("andjs")){
 										
 										new Thread(new Runnable(){
 											
@@ -969,7 +976,10 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
 														});
 														
 													} catch (Throwable e) {
-														AppCompatToast.makeText(MainActivity.this, "打包失败:" + e.toString(), 1, 1);
+                                                        String report = LogUtils.getReport(e);
+														AppCompatToast.makeText(MainActivity.this, "打包失败:" + report, 1, 1);
+                                                        LogUtils.reportSaveToSD(e);
+                                                        
 													}
 												}
 												
@@ -1002,8 +1012,11 @@ public class MainActivity extends BaseActivity implements OnItemLongClickListene
                             
                     });
                     menu.show();
+                    
+                }
                     return false;
                 }
+                
         });
         updateProjects();
 		lv1.setAdapter(mainProjectAdapter); 

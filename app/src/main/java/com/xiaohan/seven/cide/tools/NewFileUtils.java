@@ -132,9 +132,9 @@ public abstract class NewFileUtils {
 
             BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
             bw.write("/**\n" +
-                     " *类型:Modpe" + "\n" +
-                     " *名称:" + name + "\n" +
-                     " *Time:" + formatDate.format(new Date()) +
+                     " *Name: " + name + "\n" +
+                     " *Time: " + formatDate.format(new Date()) + "\n" +
+                     " *Type: " + "AndJS" + "\n" +
                      " */\n");
             bw.flush();
 
@@ -192,5 +192,87 @@ public abstract class NewFileUtils {
 
 		return htmlFile.toString();
 	}
+    
+    public static String  newAnmlProject(Context context, String name, String path, String packageName, String versionCode, String versionName, Boolean jquary, Boolean vue, Boolean mdui) {
+        SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.getDefault());
+
+        new File(path + "/" + name).mkdirs();
+        File file = new File(path + "/" + name + "/index.html");
+        File cideFile = new File(path + "/" + name + "/" + "CideCompat" + ".js");
+        
+        try {
+
+            file.createNewFile();
+            
+            String text = ApplicationUtils.getAssetsFileText("html/$index.anml", context);
+            text.replace("$create_project_name$", name);
+            text.replace("$create_message$", "\n" + 
+            "Name: " + name + "\n" +
+            "Time: " + formatDate.format(new Date()) + "\n" +
+            "Type: " + "Anml" + "\n"
+            );
+            
+            BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+            bw.write(text);
+            bw.flush();
+
+            File iconFile = new File(path + "/" + name + "/" + "icon.png");
+            iconFile.createNewFile();
+
+            Bitmap picture = ApplicationUtils.getAssetsPicture("html/icon.png", context);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            picture.compress(Bitmap.CompressFormat.PNG, 100, baos);
+            BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(iconFile));
+            bos.write(baos.toByteArray());
+            bos.close();
+
+
+            String[] size = new String[4];
+
+            size[0] = ApplicationUtils.getPrintSize(file.length());
+
+            if(jquary){
+                
+            }
+
+            if(vue){
+                
+            }
+
+            size[size.length - 1] = ApplicationUtils.getPrintSize(iconFile.length());
+
+            File fileType =  new File(path + "/" + name + "/" + "build.json");
+            fileType.createNewFile();
+            
+            cideFile.createNewFile();
+            
+            AndroidData mAndroidData = new AndroidData();
+            mAndroidData.setName(name);
+            mAndroidData.setActivities(new String[]{name});
+            mAndroidData.setType("anml");
+            mAndroidData.setSize(size);
+            mAndroidData.setTime(new String[]{formatDate.format(new Date()), formatDate.format(new Date())});
+            mAndroidData.setPaths(new String[]{file.toString(), iconFile.toString()});
+            mAndroidData.setPackageName(packageName);
+            mAndroidData.setVersionCode(versionCode);
+            mAndroidData.setVersionName(versionName);
+            BufferedWriter bwJson = new BufferedWriter(new FileWriter(fileType, true));
+            bwJson.write(new Gson().toJson(mAndroidData).toString());
+            bwJson.close();
+
+            if(mdui){
+                file.delete();
+                ApplicationUtils.unZip(context, "html/MDUI.zip", path + "/" + name);
+            }
+
+
+
+
+        } catch (IOException e) {}
+
+        return file.toString();
+    }
+    
+    
     
 }

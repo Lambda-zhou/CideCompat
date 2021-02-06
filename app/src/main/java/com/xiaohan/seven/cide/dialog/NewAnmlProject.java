@@ -45,7 +45,7 @@ public class NewAnmlProject implements CompoundButton.OnCheckedChangeListener {
                         AppCompatToast.makeText(context, "请检查名称和包名是否填写!", 1, 1);
                         return;
                     }
-                    String result = NewFileUtils.newAndJSProject(context, name.getText().toString(), path , packageName.getText().toString(), versionCode.getText().toString(), versionName.getText().toString(), hookb, cideb, requestb);
+                    String result = NewFileUtils.newAnmlProject(context, name.getText().toString(), path , packageName.getText().toString(), versionCode.getText().toString(), versionName.getText().toString(), jqueryb, vueb, mduib);
                     onCreate.onCreate(result);
                     ad.dismiss();
 

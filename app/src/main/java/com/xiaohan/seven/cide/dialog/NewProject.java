@@ -27,7 +27,8 @@ public class NewProject implements ExpandableListView.OnChildClickListener {
     static String[][] secandi={
         
         {
-            "AndJS"
+            "AndJS",
+            "Anml"
         },
         
         {
@@ -93,7 +94,9 @@ public class NewProject implements ExpandableListView.OnChildClickListener {
                 break;
                 
                 case 1:
-                
+                NewAnmlProject anml = new NewAnmlProject(context);
+                anml.setOnCreateProjectListener(this.onCreate);
+                anml.show(path);
                 break;
             }
         }else if(groupPosition == 1){
